@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+  <data>
+
+      <record model="ir.ui.view" id="eval_reminder_form">
+          <field name="name">Eval Reminder</field>
+          <field name="model">hr.employee</field>
+          <field name="inherit_id" ref="hr.view_employee_form"/>
+          <field name="arch" type="xml">
+                <xpath expr="//page[@name='public']/div/div/group[1]" position="before">
+                    <group>
+                        <field name="x_employee_code"/>
+                        <field name="x_applied_date"/>
+                    </group>
+                </xpath>
+                <xpath expr="//page[@name='hr_settings']" position="after">
+                    <page name="trial_eval" string="Trial Evaluations" groups="hr.group_hr_user">
+                        <group>
+                            <field name="x_trial_end_date"/>
+                        </group>
+                        <group>
+                            <group string="Self's Evaluation">
+                                <field name="x_self_eval" string="In Charge"/>
+                                <field name="x_self_eval_status" string="Status"/>
+                            </group>
+                            <group string="Level 1's Evaluation">
+                                <field name="x_level1_eval" string="In Charge"/>
+                                <field name="x_level1_eval_status" string="Status"/>
+                                <!-- <field name="x_level1_eval_count"/> -->
+                            </group>
+                            <group string="Level 2's Evaluation">
+                                <field name="x_level2_eval" string="In Charge"/>
+                                <field name="x_level2_eval_status" string="Status"/>
+                                <!-- <field name="x_level2_eval_count"/> -->
+                            </group>
+                            <group string="Level 3's Evaluation">
+                                <field name="x_level3_eval" string="In Charge"/>
+                                <field name="x_level3_eval_status" string="Status"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+          </field>
+      </record>
+
+  </data>
+</odoo>

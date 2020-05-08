@@ -1,0 +1,144 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="0">
+        
+        <record id="eval_reminder_email_template_level0" model="mail.template">
+            <field name="name">EvalReminder L0</field>
+            <field name="email_from">${object.company_id.name}&lt;${object.company_id.email}&gt;</field>
+            <field name="email_to">${object.work_email}</field>
+            <field name="email_cc">${object.x_level1_eval.work_email},${object.x_level2_eval.work_email},${object.x_level3_eval.work_email}</field>
+            <field name="subject">Đánh giá thử việc</field>
+            <field name="model_id" ref="eval_reminder.model_hr_employee" />
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                <div class="page">
+                    <p>Dear Anh/Chị ${object.name},</p>
+                    <p>Mời Anh/Chị đánh giá thử việc cho nhân viên: ${object.name}, MSNV: ${object.x_employee_code}</p>
+                    <div>
+                    <p>- Chức danh/ chức vụ: ${object.job_title}, Phòng: ${object.department}</p>
+                    <div>
+                        <p>- Ngày kết thúc thử việc: ${object.x_trial_end_date}</p>
+                    </div>
+                    <div>
+                        <p>- Ngày ký hợp đồng chính thức: ${object.contract_date}</p>
+                    </div>
+                    <div>
+                        <p>- Quản lý trực tiếp đánh giá: Anh/Chị ${object.x_level1_eval.name}, Chức vụ: ${object.x_level1_eval.job_title}</p>
+                    </div>
+                    <div>
+                        <p>- Quản lý gián tiếp đánh giá: Anh/Chị ${object.x_level2_eval.name}, Chức vụ: ${object.x_level1_eval.job_title}</p>
+                        <p>- Hướng dẫn đánh giá thử việc: <a href="http://mis.thuanhai.com.vn/forum/it-support-2/question/huong-dan-danh-gia-thu-viec-4" style="text-decoration-thickness:auto;font-style: initial; font-variant-ligatures: initial; font-variant-caps: initial; font-weight: initial; text-align: inherit; background-color: rgb(255, 255, 255); color: rgb(124, 123, 173);">http://mis.thuanhai.com.vn/forum/it-support-2/question/huong-dan-danh-gia-thu-viec-4</a><br></p>
+                    </div>
+                    <div>
+                        <p><i>Trân trọng cảm ơn sự hỗ trợ của Anh/Chị!</i></p>
+                        <hr style="border-style:solid none none none;border-image-width:1;border-image-source:none;border-image-slice:100%;border-image-repeat:stretch;border-image-outset:0;border-left-color:currentcolor;border-bottom-color:currentcolor;border-right-color:currentcolor;">
+                        <p></p>
+                    </div>
+                    <div>
+                        <p><b>Bộ phận Tuyển dụng</b></p>
+                    </div>
+                    <div>
+                        <p><b>CÔNG TY CỔ PHẦN THUẬN HẢI</b></p>
+                    </div>
+                    </div>
+                </div>
+                ]]>
+            </field>
+        </record>
+
+        <record id="eval_reminder_email_template_level1" model="mail.template">
+            <field name="name">EvalReminder L1</field>
+            <field name="email_from">${object.company_id.name}&lt;${object.company_id.email}&gt;</field>
+            <field name="email_to">${object.x_level1_eval.work_email}</field>
+            <field name="email_cc">${object.x_level2_eval.work_email},${object.x_level3_eval.work_email}</field>
+            <field name="subject">Đánh giá thử việc</field>
+            <field name="model_id" ref="eval_reminder.model_hr_employee" />
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                <div class="page">
+                    <p>Dear Anh/Chị ${object.x_level1_eval.name},</p>
+                    <p>Mời Anh/Chị đánh giá thử việc cho nhân viên: ${object.name}, MSNV: ${object.x_employee_code}</p>
+                    <div>
+                    <p>- Chức danh/ chức vụ: ${object.job_title}, Phòng: ${object.department}</p>
+                    <div>
+                        <p>- Ngày kết thúc thử việc: ${object.x_trial_end_date}</p>
+                    </div>
+                    <div>
+                        <p>- Ngày ký hợp đồng chính thức: ${object.contract_date}</p>
+                    </div>
+                    <div>
+                        <p>- Quản lý trực tiếp đánh giá: Anh/Chị ${object.x_level1_eval.name}, Chức vụ: ${object.x_level1_eval.job_title}</p>
+                    </div>
+                    <div>
+                        <p>- Quản lý gián tiếp đánh giá: Anh/Chị ${object.x_level2_eval.name}, Chức vụ: ${object.x_level1_eval.job_title}</p>
+                        <p>- Hướng dẫn đánh giá thử việc: <a href="http://mis.thuanhai.com.vn/forum/it-support-2/question/huong-dan-danh-gia-thu-viec-4" style="text-decoration-thickness:auto;font-style: initial; font-variant-ligatures: initial; font-variant-caps: initial; font-weight: initial; text-align: inherit; background-color: rgb(255, 255, 255); color: rgb(124, 123, 173);">http://mis.thuanhai.com.vn/forum/it-support-2/question/huong-dan-danh-gia-thu-viec-4</a><br></p>
+                    </div>
+                    <div>
+                        % if not object.x_level1_eval_status and object.x_level1_eval_count > 0:
+                        <p><font style="color: rgb(255, 0, 0);">(Đây là email thông báo lần thứ ${object.x_level1_eval_count}, ở cấp Anh/Chị ${object.x_level1_eval.name}. Anh/Chị vui lòng thực hiện đánh giá thử việc để không ảnh hưởng đến quyền lợi của nhân viên mình.)</font></p>
+                        % endif
+                        <p><i>Trân trọng cảm ơn sự hỗ trợ của Anh/Chị!</i></p>
+                        <hr style="border-style:solid none none none;border-image-width:1;border-image-source:none;border-image-slice:100%;border-image-repeat:stretch;border-image-outset:0;border-left-color:currentcolor;border-bottom-color:currentcolor;border-right-color:currentcolor;">
+                        <p></p>
+                    </div>
+                    <div>
+                        <p><b>Bộ phận Tuyển dụng</b></p>
+                    </div>
+                    <div>
+                        <p><b>CÔNG TY CỔ PHẦN THUẬN HẢI</b></p>
+                    </div>
+                    </div>
+                </div>
+                ]]>
+            </field>
+        </record>
+
+        <record id="eval_reminder_email_template_level2" model="mail.template">
+            <field name="name">EvalReminder L2</field>
+            <field name="email_from">${object.company_id.name}&lt;${object.company_id.email}&gt;</field>
+            <field name="email_to">${object.x_level2_eval.work_email}</field>
+            <field name="email_cc">${object.x_level3_eval.work_email}</field>
+            <field name="subject">Đánh giá thử việc</field>
+            <field name="model_id" ref="eval_reminder.model_hr_employee" />
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                <div class="page">
+                    <p>Dear Anh/Chị ${object.x_level2_eval.name},</p>
+                    <p>Mời Anh/Chị đánh giá thử việc cho nhân viên: ${object.name}, MSNV: ${object.x_employee_code}</p>
+                    <div>
+                    <p>- Chức danh/ chức vụ: ${object.job_title}, Phòng: ${object.department}</p>
+                    <div>
+                        <p>- Ngày kết thúc thử việc: ${object.x_trial_end_date}</p>
+                    </div>
+                    <div>
+                        <p>- Ngày ký hợp đồng chính thức: ${object.contract_date}</p>
+                    </div>
+                    <div>
+                        <p>- Quản lý trực tiếp đánh giá: Anh/Chị ${object.x_level1_eval.name}, Chức vụ: ${object.x_level1_eval.job_title}</p>
+                    </div>
+                    <div>
+                        <p>- Quản lý gián tiếp đánh giá: Anh/Chị ${object.x_level2_eval.name}, Chức vụ: ${object.x_level1_eval.job_title}</p>
+                        <p>- Hướng dẫn đánh giá thử việc: <a href="http://mis.thuanhai.com.vn/forum/it-support-2/question/huong-dan-danh-gia-thu-viec-4" style="text-decoration-thickness:auto;font-style: initial; font-variant-ligatures: initial; font-variant-caps: initial; font-weight: initial; text-align: inherit; background-color: rgb(255, 255, 255); color: rgb(124, 123, 173);">http://mis.thuanhai.com.vn/forum/it-support-2/question/huong-dan-danh-gia-thu-viec-4</a><br></p>
+                    </div>
+                    <div>
+                        % if not object.x_level2_eval_status and object.x_level2_eval_count > 0:
+                        <p><font style="color: rgb(255, 0, 0);">(Đây là email thông báo lần thứ ${object.x_level2_eval_count}, ở cấp Anh/Chị ${object.x_level2_eval.name}. Anh/Chị vui lòng thực hiện đánh giá thử việc để không ảnh hưởng đến quyền lợi của nhân viên mình.)</font></p>
+                        % endif
+                        <p><i>Trân trọng cảm ơn sự hỗ trợ của Anh/Chị!</i></p>
+                        <hr style="border-style:solid none none none;border-image-width:1;border-image-source:none;border-image-slice:100%;border-image-repeat:stretch;border-image-outset:0;border-left-color:currentcolor;border-bottom-color:currentcolor;border-right-color:currentcolor;">
+                        <p></p>
+                    </div>
+                    <div>
+                        <p><b>Bộ phận Tuyển dụng</b></p>
+                    </div>
+                    <div>
+                        <p><b>CÔNG TY CỔ PHẦN THUẬN HẢI</b></p>
+                    </div>
+                    </div>
+                </div>
+                ]]>
+            </field>
+        </record>
+
+    </data>
+</odoo>
